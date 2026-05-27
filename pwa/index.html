@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1e3a5f">
+  <meta name="description" content="Portal de autogestión para alumnos AVEMER">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <title>AVEMER Alumnos</title>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#1e3a5f',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+  <!-- Toast notification -->
+  <div id="toast" class="fixed top-4 right-4 z-50 hidden transition-all duration-300"></div>
+
+  <!-- App Shell -->
+  <div id="app" class="min-h-screen flex flex-col">
+
+    <!-- Top Bar (visible when authenticated) -->
+    <header id="topbar" class="bg-primary-500 text-white px-4 py-3 flex items-center justify-between shadow-md hidden">
+      <button id="menuBtn" class="text-white text-xl p-1"><i class="fa fa-bars"></i></button>
+      <h1 id="pageTitle" class="text-lg font-semibold truncate mx-2">AVEMER</h1>
+      <button id="logoutBtn" class="text-white text-sm p-1"><i class="fa fa-sign-out-alt"></i></button>
+    </header>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="flex-1 p-4 pb-20 overflow-y-auto">
+      <div id="loading" class="flex items-center justify-center h-64">
+        <div class="animate-spin rounded-full h-10 w-10 border-4 border-primary-500 border-t-transparent"></div>
+      </div>
+    </main>
+
+    <!-- Bottom Nav (visible when authenticated) -->
+    <nav id="bottomNav" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg hidden">
+      <div class="flex justify-around items-center h-16 max-w-lg mx-auto">
+        <a href="#dashboard" class="nav-link flex flex-col items-center px-3 py-1 text-gray-500" data-route="dashboard">
+          <i class="fa fa-home text-xl"></i>
+          <span class="text-xs mt-0.5">Inicio</span>
+        </a>
+        <a href="#profile" class="nav-link flex flex-col items-center px-3 py-1 text-gray-500" data-route="profile">
+          <i class="fa fa-user text-xl"></i>
+          <span class="text-xs mt-0.5">Perfil</span>
+        </a>
+        <a href="#enrollments" class="nav-link flex flex-col items-center px-3 py-1 text-gray-500" data-route="enrollments">
+          <i class="fa fa-graduation-cap text-xl"></i>
+          <span class="text-xs mt-0.5">Cursos</span>
+        </a>
+        <a href="#payments" class="nav-link flex flex-col items-center px-3 py-1 text-gray-500" data-route="payments">
+          <i class="fa fa-credit-card text-xl"></i>
+          <span class="text-xs mt-0.5">Pagos</span>
+        </a>
+        <a href="#offers" class="nav-link flex flex-col items-center px-3 py-1 text-gray-500" data-route="offers">
+          <i class="fa fa-star text-xl"></i>
+          <span class="text-xs mt-0.5">Ofertas</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/pages/login.js"></script>
+  <script src="js/pages/dashboard.js"></script>
+  <script src="js/pages/profile.js"></script>
+  <script src="js/pages/enrollments.js"></script>
+  <script src="js/pages/payments.js"></script>
+  <script src="js/pages/offers.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
