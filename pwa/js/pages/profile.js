@@ -6,13 +6,13 @@ async function renderProfile(container) {
   const user = Auth.getUser();
 
   const nombre = p.nombre_completo || (user?.nombre + ' ' + user?.apellido) || '';
-  const fotoUrl = CONFIG.API_BASE + '/profile/photo';
+  const fotoSrc = p.foto_base64 ? `data:image/jpeg;base64,${p.foto_base64}` : '';
 
   container.innerHTML = `
     <div class="max-w-lg mx-auto space-y-5">
       <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 text-center">
         <div class="w-24 h-24 rounded-full bg-primary-100 mx-auto mb-3 flex items-center justify-center overflow-hidden border-4 border-primary-200">
-          <img src="${fotoUrl}" alt="Foto" class="w-full h-full object-cover hidden" onerror="this.classList.add('hidden')" onload="this.classList.remove('hidden')">
+          ${fotoSrc ? `<img src="${fotoSrc}" alt="Foto" class="w-full h-full object-cover">` : ''}
           <i class="fa fa-user text-4xl text-primary-400"></i>
         </div>
         <h2 class="text-lg font-bold">${nombre}</h2>

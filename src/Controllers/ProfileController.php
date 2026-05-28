@@ -28,6 +28,11 @@ class ProfileController
             ($profile['segundo_apellido'] ?? '')
         );
 
+        $fotoData = $alumno->getFoto($alumnoId);
+        if ($fotoData) {
+            $profile['foto_base64'] = base64_encode($fotoData['foto']);
+        }
+
         return Response::json($response, $profile);
     }
 
