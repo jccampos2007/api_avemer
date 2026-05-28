@@ -4,6 +4,21 @@
 #toast.show { opacity: 1; transform: translateY(0); }
 #toast { opacity: 0; transform: translateY(-10px); }
 
+.offer-card-slider {
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: width 0.3s ease;
+}
+
+.offer-card-slider.show {
+  width: 6rem;
+}
+
+.offer-group-chevron {
+  transition: transform 0.2s ease;
+}
+
 @media (max-width: 640px) {
   #mainContent { padding-bottom: 5rem; }
 }

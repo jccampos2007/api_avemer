@@ -15,6 +15,7 @@ class Inscripcion
     {
         $sql = "
             SELECT 'curso' AS tipo, ic.id AS inscripcion_id,
+                   ic.curso_abierto_id AS abierto_id,
                    CONCAT(ca.numero, ' - ', c.nombre) AS titulo,
                    ic.fecha,
                    COALESCE(ic.estatus_inscripcion_id, 0) AS estatus_id,
@@ -28,6 +29,7 @@ class Inscripcion
             UNION ALL
 
             SELECT 'diplomado' AS tipo, idp.id AS inscripcion_id,
+                   idp.diplomado_abierto_id AS abierto_id,
                    CONCAT(da.numero, ' - ', d.nombre) AS titulo,
                    idp.fecha,
                    COALESCE(idp.estatus_inscripcion_id, 0) AS estatus_id,
@@ -41,6 +43,7 @@ class Inscripcion
             UNION ALL
 
             SELECT 'maestria' AS tipo, im.id AS inscripcion_id,
+                   im.maestria_abierto_id AS abierto_id,
                    CONCAT(ma.numero, ' - ', m.nombre) AS titulo,
                    im.fecha,
                    COALESCE(im.estatus_inscripcion_id, 0) AS estatus_id,
@@ -54,6 +57,7 @@ class Inscripcion
             UNION ALL
 
             SELECT 'evento' AS tipo, ie.id AS inscripcion_id,
+                   ie.evento_abierto_id AS abierto_id,
                    CONCAT(ea.numero, ' - ', e.nombre) AS titulo,
                    ie.fecha,
                    COALESCE(ie.estatus_inscripcion_id, 0) AS estatus_id,
@@ -75,5 +79,42 @@ class Inscripcion
             ':id4' => $alumnoId,
         ]);
         return $stmt->fetchAll();
+    }
+
+    public function preRegister(int $alumnoId, string $tipo, int $abiertoId): array
+    {
+        $tableMap = [
+            'curso' => 'curso',
+            'diplomado' => 'diplomado',
+            'maestria' => 'maestria',
+            'evento' => 'evento',
+        ];
+
+        $table = $tableMap[$tipo] ?? null;
+        if (!$table) {
+            return ['success' => false, 'message' => 'Tipo de oferta inválido.'];
+        }
+
+        $check = $this->pdo->prepare(
+            "SELECT id FROM inscripcion_{$table} WHERE alumno_id = :alumno_id AND {$table}_abierto_id = :abierto_id"
+        );
+        $check->execute([
+            ':alumno_id' => $alumnoId,
+            ':abierto_id' => $abiertoId,
+        ]);
+
+        if ($check->fetch()) {
+            return ['success' => false, 'message' => 'Ya estás pre-inscrito en esta oferta.'];
+        }
+
+        $stmt = $this->pdo->prepare(
+            "INSERT INTO inscripcion_{$table} (alumno_id, {$table}_abierto_id, estatus_inscripcion_id) VALUES (:alumno_id, :abierto_id, 1)"
+        );
+        $stmt->execute([
+            ':alumno_id' => $alumnoId,
+            ':abierto_id' => $abiertoId,
+        ]);
+
+        return ['success' => true, 'message' => 'Pre-inscripción realizada con éxito.'];
     }
 }

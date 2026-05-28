@@ -65,6 +65,7 @@ $app->group('/v1', function (RouteCollectorProxy $group) {
     $group->get('/profile/photo', [ProfileController::class, 'getPhoto']);
     $group->put('/profile/password', [ProfileController::class, 'changePassword']);
     $group->get('/enrollments', [EnrollmentController::class, 'list']);
+    $group->post('/enrollments/pre-register', [EnrollmentController::class, 'preRegister']);
     $group->get('/debts', [PaymentController::class, 'getDebts']);
     $group->get('/payments', [PaymentController::class, 'getPayments']);
     $group->post('/payments/report', [PaymentController::class, 'reportPayment']);

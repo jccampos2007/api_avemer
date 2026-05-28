@@ -14,7 +14,7 @@ class Oferta
     public function getAbiertos(): array
     {
         $sql = "
-            SELECT 'curso' AS tipo, c.id,
+            SELECT 'curso' AS tipo, c.id, ca.id AS abierto_id,
                    CONCAT(ca.numero, ' - ', c.nombre) AS titulo,
                    c.nombre,
                    c.horas AS duracion,
@@ -30,7 +30,7 @@ class Oferta
 
             UNION ALL
 
-            SELECT 'diplomado' AS tipo, d.id,
+            SELECT 'diplomado' AS tipo, d.id, da.id AS abierto_id,
                    CONCAT(da.numero, ' - ', d.nombre) AS titulo,
                    d.nombre,
                    d.costo AS duracion,
@@ -46,7 +46,7 @@ class Oferta
 
             UNION ALL
 
-            SELECT 'maestria' AS tipo, m.id,
+            SELECT 'maestria' AS tipo, m.id, ma.id AS abierto_id,
                    CONCAT(ma.numero, ' - ', m.nombre) AS titulo,
                    m.nombre,
                    m.horas AS duracion,
@@ -62,7 +62,7 @@ class Oferta
 
             UNION ALL
 
-            SELECT 'evento' AS tipo, e.id,
+            SELECT 'evento' AS tipo, e.id, ea.id AS abierto_id,
                    CONCAT(ea.numero, ' - ', e.nombre) AS titulo,
                    e.nombre,
                    NULL AS duracion,
