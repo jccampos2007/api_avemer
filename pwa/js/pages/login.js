@@ -16,9 +16,15 @@ function renderLogin(container) {
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-            <input type="password" id="loginPassword" required
-              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-sm"
-              placeholder="••••••••">
+            <div class="relative">
+              <input type="password" id="loginPassword" required
+                class="w-full px-4 py-2.5 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-sm"
+                placeholder="••••••••">
+              <button type="button" id="togglePassword"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                <i class="fa fa-eye"></i>
+              </button>
+            </div>
           </div>
           <button type="submit" id="loginBtn"
             class="w-full bg-primary-500 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-primary-700 transition text-sm">
@@ -30,6 +36,14 @@ function renderLogin(container) {
       </div>
     </div>
   `;
+
+  document.getElementById('togglePassword')?.addEventListener('click', () => {
+    const input = document.getElementById('loginPassword');
+    const icon = document.querySelector('#togglePassword i');
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    icon.className = `fa ${isPassword ? 'fa-eye-slash' : 'fa-eye'}`;
+  });
 
   document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
