@@ -12,8 +12,10 @@ async function renderProfile(container) {
     <div class="max-w-lg mx-auto space-y-5">
       <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 text-center">
         <div class="w-24 h-24 rounded-full bg-primary-100 mx-auto mb-3 flex items-center justify-center overflow-hidden border-4 border-primary-200">
-          ${fotoSrc ? `<img src="${fotoSrc}" alt="Foto" class="w-full h-full object-cover">` : ''}
-          <i class="fa fa-user text-4xl text-primary-400"></i>
+          ${fotoSrc
+            ? `<img src="${fotoSrc}" alt="Foto" class="w-full h-full object-cover">`
+            : '<i class="fa fa-user text-4xl text-primary-400"></i>'}
+        
         </div>
         <h2 class="text-lg font-bold">${nombre}</h2>
         <p class="text-sm text-gray-500">${p.ci_pasapote || ''}</p>
