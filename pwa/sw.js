@@ -1,4 +1,4 @@
-const CACHE_NAME = 'avemer-pwa-v1';
+const CACHE_NAME = 'avemer-pwa-v2';
 const STATIC_URLS = [
   '/api/pwa/index.html',
   '/api/pwa/manifest.json',

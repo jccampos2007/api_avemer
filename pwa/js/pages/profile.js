@@ -78,6 +78,7 @@ async function renderProfile(container) {
     const res = await API.uploadPhoto(file);
     if (res?.success) {
       showToast('Foto actualizada', 'success');
+      await renderProfile(container);
     } else {
       showToast(res?.message || 'Error al subir foto', 'error');
     }
