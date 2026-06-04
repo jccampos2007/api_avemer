@@ -43,9 +43,11 @@ class Transaccion
         $sql = "
             SELECT
                 p.id AS pago_id,
+                p.alumno_id,
                 p.monto,
                 p.fecha AS fecha_pago,
                 p.numero_control AS referencia,
+                p.voucher,
                 p.estatus_pago_id,
                 ep.nombre AS estatus_pago,
                 f.nombre AS forma_pago,
@@ -57,7 +59,9 @@ class Transaccion
             LEFT JOIN forma_pago f ON f.id = p.forma_pago_id
             LEFT JOIN banco b ON b.id = p.banco_id
             INNER JOIN cuota c ON c.id = p.cuota_id
-            WHERE p.alumno_id = :alumno_id
+            WHERE p.cuota_id IN (
+                SELECT DISTINCT cuota_id FROM transaccion WHERE alumno_id = :alumno_id
+            )
             ORDER BY p.fecha DESC
         ";
         $stmt = $this->pdo->prepare($sql);

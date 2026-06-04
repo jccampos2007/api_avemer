@@ -31,6 +31,19 @@ const API = {
   post(path, data) { return this.request('POST', path, data); },
   put(path, data) { return this.request('PUT', path, data); },
 
+  async postFormData(path, formData) {
+    const url = CONFIG.API_BASE + path;
+    const headers = { 'Authorization': 'Bearer ' + Auth.getToken() };
+    const res = await fetch(url, { method: 'POST', headers, body: formData });
+    const json = await res.json();
+    if (!res.ok && res.status === 401 && Auth.getToken()) {
+      Auth.logout();
+      window.location.hash = '#login';
+      return null;
+    }
+    return json;
+  },
+
   async uploadPhoto(file) {
     const url = CONFIG.API_BASE + '/profile/photo';
     const formData = new FormData();

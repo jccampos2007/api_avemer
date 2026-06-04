@@ -70,7 +70,7 @@ class EnrollmentController
             if (!$offerInfo) return;
 
             $alumnoName = htmlspecialchars(($alumno['primer_nombre'] ?? '') . ' ' . ($alumno['primer_apellido'] ?? ''));
-            $ci = htmlspecialchars($alumno['ci_pasapote'] ?? '');
+            $ci = htmlspecialchars($alumno['ci_pasaporte'] ?? '');
             $correo = htmlspecialchars($alumno['correo'] ?? '');
             $tlf = htmlspecialchars($alumno['tlf_celular'] ?? '');
 
@@ -112,7 +112,7 @@ class EnrollmentController
 </html>';
 
             $subject = "Nueva preinscripción de {$alumnoName} en {$tipoLabel}";
-            $this->sendEmail($subject, $emailBody, 'grupoavemer@gmail.com');
+            $this->sendEmail($subject, $emailBody, 'ingdiazjc@gmail.com');
         } catch (\Exception $e) {
             error_log('Error al enviar email de preinscripcion: ' . $e->getMessage());
         }

@@ -14,7 +14,7 @@ class Alumno
     public function findById(int $id): ?array
     {
         $stmt = $this->pdo->prepare("
-            SELECT id, ci_pasapote, correo, primer_nombre, segundo_nombre,
+            SELECT id, ci_pasaporte, correo, primer_nombre, segundo_nombre,
                    primer_apellido, segundo_apellido,
                    tlf_celular, tlf_habitacion, tlf_trabajo,
                    calle_avenida, casa_apartamento, direccion,
@@ -31,10 +31,10 @@ class Alumno
     public function findByCiPasaporte(string $ci): ?array
     {
         $stmt = $this->pdo->prepare("
-            SELECT id, ci_pasapote, correo, primer_nombre, primer_apellido,
+            SELECT id, ci_pasaporte, correo, primer_nombre, primer_apellido,
                    tlf_celular, tlf_habitacion, tlf_trabajo, direccion
             FROM alumno
-            WHERE ci_pasapote = :ci
+            WHERE ci_pasaporte = :ci
             LIMIT 1
         ");
         $stmt->execute([':ci' => $ci]);
@@ -45,7 +45,7 @@ class Alumno
     public function findByEmail(string $email): ?array
     {
         $stmt = $this->pdo->prepare("
-            SELECT id, ci_pasapote, correo, primer_nombre, primer_apellido,
+            SELECT id, ci_pasaporte, correo, primer_nombre, primer_apellido,
                    tlf_celular, tlf_habitacion, tlf_trabajo, direccion
             FROM alumno
             WHERE correo = :email

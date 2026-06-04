@@ -14,7 +14,7 @@ class AlumnoAuth
     public function findByEmail(string $email): ?array
     {
         $stmt = $this->pdo->prepare("
-            SELECT aa.*, a.ci_pasapote, a.correo,
+            SELECT aa.*, a.ci_pasaporte, a.correo,
                    a.primer_nombre, a.segundo_nombre,
                    a.primer_apellido, a.segundo_apellido,
                    a.tlf_celular, a.tlf_habitacion, a.tlf_trabajo,
@@ -32,7 +32,7 @@ class AlumnoAuth
     public function findByAlumnoId(int $alumnoId): ?array
     {
         $stmt = $this->pdo->prepare("
-            SELECT aa.*, a.ci_pasapote, a.correo,
+            SELECT aa.*, a.ci_pasaporte, a.correo,
                    a.primer_nombre, a.segundo_nombre,
                    a.primer_apellido, a.segundo_apellido,
                    a.tlf_celular, a.tlf_habitacion, a.tlf_trabajo,

@@ -18,7 +18,7 @@ async function renderProfile(container) {
         
         </div>
         <h2 class="text-lg font-bold">${nombre}</h2>
-        <p class="text-sm text-gray-500">${p.ci_pasapote || ''}</p>
+        <p class="text-sm text-gray-500">${p.ci_pasaporte || ''}</p>
         <label class="inline-block mt-3 text-sm text-primary-600 cursor-pointer hover:underline">
           <i class="fa fa-camera mr-1"></i>Cambiar foto
           <input type="file" id="photoInput" accept="image/*" class="hidden">

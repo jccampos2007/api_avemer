@@ -2,3 +2,4 @@
 .env
 /test_api.php
 /storage/logs/*.log
+/public/uploads/*

@@ -67,7 +67,7 @@ class AuthController
                 'nombre' => $nombre,
                 'apellido' => $apellido,
                 'email' => $user['correo'],
-                'ci_pasapote' => $user['ci_pasapote'],
+                'ci_pasaporte' => $user['ci_pasaporte'],
             ],
         ]);
     }

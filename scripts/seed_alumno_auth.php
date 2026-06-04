@@ -33,7 +33,7 @@ $pdo->exec("
 ");
 
 // Bulk insert in chunks for performance
-$alumnos = $pdo->query("SELECT id, ci_pasapote FROM alumno ORDER BY id")->fetchAll();
+$alumnos = $pdo->query("SELECT id, ci_pasaporte FROM alumno ORDER BY id")->fetchAll();
 
 $chunks = array_chunk($alumnos, 500);
 $created = 0;
@@ -57,7 +57,7 @@ foreach ($chunks as $chunk) {
             continue;
         }
 
-        $password = !empty($alumno['ci_pasapote']) ? $alumno['ci_pasapote'] : 'default';
+        $password = !empty($alumno['ci_pasaporte']) ? $alumno['ci_pasaporte'] : 'default';
         $hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 8]);
 
         try {
