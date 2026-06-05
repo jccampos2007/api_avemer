@@ -1,0 +1,16 @@
+# Servir index.html como página de inicio por defecto
+DirectoryIndex index.html
+
+# Soporte para PWA de página única (SPA)
+# Si el archivo/directorio no existe, redirige a index.html
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /api/pwa/
+
+    # No reescribir archivos o directorios que existen
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Todo lo demás → index.html (para rutas hash no es necesario, pero por si acaso)
+    RewriteRule ^ index.html [L]
+</IfModule>
