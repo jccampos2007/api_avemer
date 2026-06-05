@@ -6,10 +6,6 @@ function showToast(message, type) {
   setTimeout(() => { el.classList.remove('show'); el.classList.add('hidden'); }, 3500);
 }
 
-document.getElementById('menuBtn')?.addEventListener('click', () => {
-  document.getElementById('bottomNav')?.classList.toggle('shadow-lg');
-});
-
 document.getElementById('logoutBtn')?.addEventListener('click', () => {
   Auth.logout();
   window.location.hash = '#login';
@@ -25,13 +21,26 @@ Router.register('offers', renderOffers, { title: 'Ofertas' });
 Router.addGuard(async (route, def) => {
   if (def.requiresAuth && Auth.isAuthenticated()) {
     const token = Auth.getToken();
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    if (payload.exp * 1000 < Date.now()) {
-      Auth.logout();
-      window.location.hash = '#login';
-      return false;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      if (payload.exp * 1000 < Date.now()) {
+        const ok = await Auth.init();
+        if (!ok) {
+          window.location.hash = '#login';
+          return false;
+        }
+      }
+    } catch {
+      const ok = await Auth.init();
+      if (!ok) {
+        window.location.hash = '#login';
+        return false;
+      }
     }
   }
 });
 
-Router.init();
+(async () => {
+  await Auth.init();
+  Router.init();
+})();

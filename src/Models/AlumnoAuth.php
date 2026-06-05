@@ -72,6 +72,49 @@ class AlumnoAuth
         ]);
     }
 
+    public function updateResetToken(string $email, string $token, string $expiresAt): bool
+    {
+        $stmt = $this->pdo->prepare("
+            UPDATE alumno_auth aa
+            INNER JOIN alumno a ON a.id = aa.alumno_id
+            SET aa.verification_token = :token,
+                aa.reset_token_expires_at = :expires_at
+            WHERE a.correo = :email
+        ");
+        return $stmt->execute([
+            ':token' => $token,
+            ':expires_at' => $expiresAt,
+            ':email' => $email,
+        ]);
+    }
+
+    public function findByResetToken(string $token): ?array
+    {
+        $stmt = $this->pdo->prepare("
+            SELECT aa.*, a.correo
+            FROM alumno_auth aa
+            INNER JOIN alumno a ON a.id = aa.alumno_id
+            WHERE aa.verification_token = :token
+              AND aa.reset_token_expires_at IS NOT NULL
+              AND aa.reset_token_expires_at > NOW()
+            LIMIT 1
+        ");
+        $stmt->execute([':token' => $token]);
+        $result = $stmt->fetch();
+        return $result ?: null;
+    }
+
+    public function clearResetToken(int $alumnoId): bool
+    {
+        $stmt = $this->pdo->prepare("
+            UPDATE alumno_auth
+            SET verification_token = NULL,
+                reset_token_expires_at = NULL
+            WHERE alumno_id = :alumno_id
+        ");
+        return $stmt->execute([':alumno_id' => $alumnoId]);
+    }
+
     public function updateRememberToken(int $alumnoId, ?string $token): bool
     {
         $stmt = $this->pdo->prepare("

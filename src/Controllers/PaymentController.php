@@ -161,32 +161,56 @@ class PaymentController
             $voucherPath = self::VOUCHER_DIR . $voucherName;
         }
 
-        $stmt = $this->pdo->prepare("
-            INSERT INTO pago
-                (cuota_id, alumno_id, monto, numero_control, banco_id, forma_pago_id,
-                 fecha, estatus_pago_id, voucher)
-            VALUES
-                (:cuota_id, :alumno_id, :monto, :numero_control, :banco_id, :forma_pago_id,
-                 :fecha, 1, :voucher)
-        ");
+        // Start Transaction to ensure consistency between 'pago' and 'transaccion'
+        $this->pdo->beginTransaction();
 
-        $stmt->execute([
-            ':cuota_id' => (int)$body['cuota_id'],
-            ':alumno_id' => $alumnoId,
-            ':monto' => (float)$body['monto'],
-            ':numero_control' => !empty($body['numero_control']) ? $body['numero_control'] : null,
-            ':banco_id' => !empty($body['banco_id']) ? (int)$body['banco_id'] : null,
-            ':forma_pago_id' => $formaPagoId,
-            ':fecha' => $fecha,
-            ':voucher' => $voucherPath,
-        ]);
+        try {
+            $stmt = $this->pdo->prepare("
+                INSERT INTO pago
+                    (cuota_id, alumno_id, monto, numero_control, banco_id, forma_pago_id,
+                     fecha, estatus_pago_id, voucher)
+                VALUES
+                    (:cuota_id, :alumno_id, :monto, :numero_control, :banco_id, :forma_pago_id,
+                     :fecha, 1, :voucher)
+            ");
 
-        $pagoId = (int)$this->pdo->lastInsertId();
+            $stmt->execute([
+                ':cuota_id' => (int)$body['cuota_id'],
+                ':alumno_id' => $alumnoId,
+                ':monto' => (float)$body['monto'],
+                ':numero_control' => !empty($body['numero_control']) ? $body['numero_control'] : null,
+                ':banco_id' => !empty($body['banco_id']) ? (int)$body['banco_id'] : null,
+                ':forma_pago_id' => $formaPagoId,
+                ':fecha' => $fecha,
+                ':voucher' => $voucherPath,
+            ]);
 
-        return Response::json($response, [
-            'pago_id' => $pagoId,
-            'estatus_pago' => 'Pendiente',
-        ], 201, 'Pago reportado exitosamente. Pendiente de validación.');
+            $pagoId = (int)$this->pdo->lastInsertId();
+
+            // Insert matching Transaction Record (tipo: 2 [Credito], estatus: 2 [Pago registrado])
+            $transaccion = new Transaccion();
+            $transaccion->create([
+                'alumno_id' => $alumnoId,
+                'cuota_id' => (int)$body['cuota_id'],
+                'fecha_pago' => $fecha,
+                'tipo' => 2, // Credito
+                'monto' => (float)$body['monto'],
+                'estatus' => 2, // Pago registrado
+                'id_transaccion_origen' => $pagoId,
+            ]);
+
+            $this->pdo->commit();
+
+            return Response::json($response, [
+                'pago_id' => $pagoId,
+                'estatus_pago' => 'Pendiente',
+            ], 201, 'Pago reportado exitosamente. Pendiente de validación.');
+
+        } catch (\Exception $e) {
+            $this->pdo->rollBack();
+            error_log('Error en reportPayment (transacción revertida): ' . $e->getMessage());
+            return Response::error($response, 'Error de base de datos al reportar el pago: ' . $e->getMessage(), 500, 'DATABASE_ERROR');
+        }
     }
 
     public function getBancos(Request $request, ResponseMessage $response): ResponseMessage

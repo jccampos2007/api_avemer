@@ -56,6 +56,9 @@ $app->add(function ($request, $handler) {
 // Rutas públicas
 $app->post('/v1/auth/login', [AuthController::class, 'login']);
 $app->post('/v1/auth/refresh', [AuthController::class, 'refresh']);
+$app->post('/v1/auth/forgot-password', [AuthController::class, 'forgotPassword']);
+$app->post('/v1/auth/verify-otp', [AuthController::class, 'verifyOtp']);
+$app->post('/v1/auth/reset-password', [AuthController::class, 'resetPassword']);
 
 // Rutas protegidas
 $app->group('/v1', function (RouteCollectorProxy $group) {

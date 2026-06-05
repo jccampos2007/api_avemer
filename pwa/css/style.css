@@ -19,6 +19,14 @@
   transition: transform 0.2s ease;
 }
 
+.tab-btn { color: #6b7280; }
+.tab-btn:hover { color: #374151; }
+.tab-btn.tab-active {
+  background-color: #1e3a5f;
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
 @media (max-width: 640px) {
   #mainContent { padding-bottom: 5rem; }
 }
