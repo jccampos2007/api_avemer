@@ -1,0 +1,25 @@
+types {
+    text/html                             html htm shtml;
+    text/css                              css;
+    text/xml                              xml;
+    image/gif                             gif;
+    image/jpeg                            jpeg jpg;
+    application/javascript                js;
+    application/atom+xml                  atom;
+    application/rss+xml                   rss;
+    
+    # Soporte crucial para PWA (Manifiesto e Iconos)
+    application/json                      json map;
+    application/manifest+json             webmanifest manifest;
+    image/png                             png;
+    image/svg+xml                         svg svgz;
+    image/x-icon                          ico;
+
+    # Fuentes y archivos comunes
+    font/woff                             woff;
+    font/woff2                            woff2;
+    application/font-woff                 woff;
+    application/font-woff2                woff2;
+    application/octet-stream              bin exe dll;
+    application/octet-stream              deb dmg iso img msi msp msm;
+}
