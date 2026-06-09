@@ -17,7 +17,7 @@ async function renderOffers(container) {
   }
 
   const typeIcons = { curso: 'fa-book', diplomado: 'fa-graduation-cap', maestria: 'fa-university', evento: 'fa-calendar' };
-  const typeColors = { curso: 'border-l-blue-500', diplomado: 'border-l-purple-500', maestria: 'border-l-orange-500', evento: 'border-l-green-500' };
+  const typeColors = { curso: 'border-l-gray-500', diplomado: 'border-l-purple-500', maestria: 'border-l-orange-500', evento: 'border-l-green-500' };
   const typeLabels = { curso: 'Curso', diplomado: 'Diplomado', maestria: 'Maestría', evento: 'Evento' };
   const groupLabels = { curso: 'Cursos', diplomado: 'Diplomados', maestria: 'Maestrías', evento: 'Eventos' };
   const groupOrder = ['curso', 'diplomado', 'maestria', 'evento'];
@@ -48,17 +48,14 @@ async function renderOffers(container) {
             </div>
             <div class="offer-group-content space-y-2 p-2 hidden">
               ${groups[t].map(o => `
-                <div class="cursor-pointer select-none" data-card="${o.tipo}:${o.abierto_id}" onclick="
-                  document.querySelectorAll('.offer-card-slider.show').forEach(function(e){e.classList.remove('show')});
-                  this.querySelector('.offer-card-slider').classList.toggle('show')
-                ">
+                <div class="cursor-pointer select-none offer-card-wrapper" data-card="${o.tipo}:${o.abierto_id}">
                   <div class="flex items-stretch">
                     <div class="offer-card-slider bg-green-600 text-white flex flex-col items-center justify-center gap-1 rounded-l-xl font-semibold text-sm shrink-0 cursor-pointer"
-                      onclick="event.stopPropagation();window.preEnroll(this)" data-tipo="${o.tipo}" data-abierto-id="${o.abierto_id}">
+                      data-tipo="${o.tipo}" data-abierto-id="${o.abierto_id}">
                       <i class="fa fa-pen text-lg"></i>
                       <span>Inscribirse</span>
                     </div>
-                    <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 border-l-4 ${typeColors[o.tipo] || 'border-l-primary-500'} flex-1 min-w-0">
+                    <div class="offer-info-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 border-l-4 ${typeColors[o.tipo] || 'border-l-primary-500'} flex-1 min-w-0" data-border-class="${typeColors[o.tipo] || 'border-l-primary-500'}">
                       <div class="flex items-start gap-3">
                         <div class="w-10 h-10 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
                           <i class="fa ${typeIcons[o.tipo] || 'fa-file'}"></i>
@@ -94,6 +91,54 @@ async function renderOffers(container) {
         header.nextElementSibling.style.display = 'block';
         header.querySelector('.offer-group-chevron').style.transform = 'rotate(180deg)';
       }
+    });
+  });
+
+  // Toggle slider + border-l on card click
+  container.querySelectorAll('.offer-card-wrapper').forEach(wrapper => {
+    wrapper.addEventListener('click', function (e) {
+      // Si el click fue en el slider de inscripción, no hacer nada aquí
+      if (e.target.closest('.offer-card-slider')) return;
+
+      const slider   = this.querySelector('.offer-card-slider');
+      const infoCard = this.querySelector('.offer-info-card');
+      const borderCls = infoCard?.dataset.borderClass;
+
+      // Cerrar todos los demás sliders y restaurar sus bordes
+      container.querySelectorAll('.offer-card-wrapper').forEach(other => {
+        if (other === this) return;
+        const otherSlider = other.querySelector('.offer-card-slider');
+        const otherInfo   = other.querySelector('.offer-info-card');
+        const otherBorder = otherInfo?.dataset.borderClass;
+        if (otherSlider?.classList.contains('show')) {
+          otherSlider.classList.remove('show');
+          if (otherInfo && otherBorder) {
+            otherInfo.classList.add('border-l-4', otherBorder);
+          }
+        }
+      });
+
+      // Toggle este slider
+      const opening = !slider.classList.contains('show');
+      slider.classList.toggle('show');
+
+      if (infoCard && borderCls) {
+        if (opening) {
+          // Quitar el borde izquierdo al abrir
+          infoCard.classList.remove('border-l-4', borderCls);
+        } else {
+          // Restaurar el borde al cerrar
+          infoCard.classList.add('border-l-4', borderCls);
+        }
+      }
+    });
+  });
+
+  // Click en botón Inscribirse dentro del slider
+  container.querySelectorAll('.offer-card-slider').forEach(slider => {
+    slider.addEventListener('click', function (e) {
+      e.stopPropagation();
+      window.preEnroll(this);
     });
   });
 }

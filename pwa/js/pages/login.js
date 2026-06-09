@@ -6,7 +6,6 @@ function renderLogin(container) {
       <div class="w-full max-w-sm px-6">
         <div class="text-center mb-8">
           <img src="icons/icon.svg" alt="AVEMER" class="w-20 h-20 mx-auto mb-4">
-          <h1 class="text-2xl font-bold text-primary-500">AVEMER</h1>
           <p class="text-gray-500 text-sm mt-1">Portal de Alumnos</p>
         </div>
 
@@ -36,7 +35,7 @@ function renderLogin(container) {
               </div>
             </div>
             <button type="submit" id="welcomeBtn"
-              class="w-full bg-primary-500 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-primary-700 transition text-sm">
+              class="w-full bg-gray-700 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-gray-900 transition text-sm">
               <i class="fa fa-sign-in-alt mr-2"></i>Ingresar
             </button>
             <p id="welcomeError" class="text-red-500 text-sm text-center hidden"></p>
@@ -80,7 +79,7 @@ function renderLogin(container) {
             <label for="loginRemember" class="ml-2 text-sm text-gray-600">Recordarme</label>
           </div>
           <button type="submit" id="loginBtn"
-            class="w-full bg-primary-500 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-primary-700 transition text-sm">
+            class="w-full bg-gray-700 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-gray-900 transition text-sm">
             <i class="fa fa-sign-in-alt mr-2"></i>Ingresar
           </button>
           <p id="loginError" class="text-red-500 text-sm text-center hidden"></p>
@@ -100,7 +99,7 @@ function renderLogin(container) {
               placeholder="correo@ejemplo.com">
           </div>
           <button type="submit" id="forgotBtn"
-            class="w-full bg-primary-500 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-primary-700 transition text-sm">
+            class="w-full bg-gray-700 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-gray-900 transition text-sm">
             <i class="fa fa-paper-plane mr-2"></i>Enviar código
           </button>
           <p id="forgotError" class="text-red-500 text-sm text-center hidden"></p>
@@ -123,7 +122,7 @@ function renderLogin(container) {
                 placeholder="000000">
             </div>
             <button type="submit" id="otpBtn"
-              class="w-full bg-primary-500 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-primary-700 transition text-sm">
+              class="w-full bg-gray-700 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-gray-900 transition text-sm">
               <i class="fa fa-check mr-2"></i>Verificar c\u00f3digo
             </button>
             <p id="otpError" class="text-red-500 text-sm text-center hidden"></p>
@@ -156,7 +155,7 @@ function renderLogin(container) {
               </button>
             </div>
             <button type="submit" id="resetBtn"
-              class="w-full bg-primary-500 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-primary-700 transition text-sm">
+              class="w-full bg-gray-700 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-gray-900 transition text-sm">
               <i class="fa fa-save mr-2"></i>Restablecer contrase\u00f1a
             </button>
             <p id="resetError" class="text-red-500 text-sm text-center hidden"></p>
@@ -169,7 +168,7 @@ function renderLogin(container) {
           </form>
         </div>
 
-        <p class="text-center text-xs text-gray-400 mt-8">AVEMER &copy; 2026</p>
+        <p class="text-center text-xs text-gray-400 mt-8">Grupo Avemer C.A. &copy; 2026</p>
       </div>
     </div>
   `;

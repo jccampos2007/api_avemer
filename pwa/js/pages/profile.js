@@ -53,7 +53,7 @@ async function renderProfile(container) {
             <textarea id="pfDireccion" rows="2"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 outline-none">${p.direccion || ''}</textarea>
           </div>
-          <button type="submit" class="w-full bg-primary-500 text-white font-semibold py-2 rounded-lg hover:bg-primary-700 transition text-sm">
+          <button type="submit" class="w-full bg-gray-700 text-white font-semibold py-2 rounded-lg hover:bg-gray-900 transition text-sm">
             <i class="fa fa-save mr-2"></i>Guardar cambios
           </button>
         </form>
