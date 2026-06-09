@@ -53,7 +53,7 @@ async function renderProfile(container) {
             <textarea id="pfDireccion" rows="2"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 outline-none">${p.direccion || ''}</textarea>
           </div>
-          <button type="submit" class="w-full bg-gray-700 text-white font-semibold py-2 rounded-lg hover:bg-gray-900 transition text-sm">
+          <button type="submit" id="saveProfileBtn" class="w-full bg-gray-700 text-white font-semibold py-2 rounded-lg hover:bg-gray-900 transition text-sm">
             <i class="fa fa-save mr-2"></i>Guardar cambios
           </button>
         </form>
@@ -66,7 +66,7 @@ async function renderProfile(container) {
             class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 outline-none" required>
           <input type="password" id="pwNew" placeholder="Nueva contraseña (mín. 8 caracteres)"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 outline-none" required minlength="8">
-          <button type="submit" class="w-full bg-gray-700 text-white font-semibold py-2 rounded-lg hover:bg-gray-800 transition text-sm">
+          <button type="submit" id="savePasswordBtn" class="w-full bg-gray-700 text-white font-semibold py-2 rounded-lg hover:bg-gray-800 transition text-sm">
             <i class="fa fa-key mr-2"></i>Actualizar contraseña
           </button>
         </form>
@@ -77,8 +77,14 @@ async function renderProfile(container) {
   document.getElementById('photoInput')?.addEventListener('change', async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    
+      const btn = document.getElementById('photoInput').parentElement;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> Subiendo...';
     const res = await API.uploadPhoto(file);
     if (res?.success) {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa fa-save mr-2"></i>Cambiar foto';
       showToast('Foto actualizada', 'success');
       await renderProfile(container);
     } else {
@@ -95,20 +101,33 @@ async function renderProfile(container) {
       tlf_trabajo: document.getElementById('pfTlfTrab').value.trim(),
       direccion: document.getElementById('pfDireccion').value.trim(),
     };
+
+      const btn = document.getElementById('saveProfileBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>Guardando...';
+
     const res = await API.put('/profile', data);
     if (res?.success) {
       showToast('Perfil actualizado', 'success');
     } else {
       showToast(res?.message || 'Error al actualizar', 'error');
     }
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa fa-save mr-2"></i>Guardar cambios';
   });
 
   document.getElementById('passwordForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const current = document.getElementById('pwCurrent').value;
     const newPw = document.getElementById('pwNew').value;
+    const btn = document.getElementById('savePasswordBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>Actualizando...';
     const res = await API.put('/profile/password', { current_password: current, new_password: newPw });
+
     if (res?.success) {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa fa-key mr-2"></i>Actualizar contraseña';
       showToast('Contraseña actualizada', 'success');
       document.getElementById('passwordForm').reset();
     } else {

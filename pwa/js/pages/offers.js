@@ -17,7 +17,6 @@ async function renderOffers(container) {
   }
 
   const typeIcons = { curso: 'fa-book', diplomado: 'fa-graduation-cap', maestria: 'fa-university', evento: 'fa-calendar' };
-  const typeColors = { curso: 'border-l-gray-500', diplomado: 'border-l-purple-500', maestria: 'border-l-orange-500', evento: 'border-l-green-500' };
   const typeLabels = { curso: 'Curso', diplomado: 'Diplomado', maestria: 'Maestría', evento: 'Evento' };
   const groupLabels = { curso: 'Cursos', diplomado: 'Diplomados', maestria: 'Maestrías', evento: 'Eventos' };
   const groupOrder = ['curso', 'diplomado', 'maestria', 'evento'];
@@ -55,7 +54,7 @@ async function renderOffers(container) {
                       <i class="fa fa-pen text-lg"></i>
                       <span>Inscribirse</span>
                     </div>
-                    <div class="offer-info-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 border-l-4 ${typeColors[o.tipo] || 'border-l-primary-500'} flex-1 min-w-0" data-border-class="${typeColors[o.tipo] || 'border-l-primary-500'}">
+                    <div class="offer-info-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 border-l-4 border-l-gray-500 flex-1 min-w-0" data-border-class="border-l-gray-500">
                       <div class="flex items-start gap-3">
                         <div class="w-10 h-10 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
                           <i class="fa ${typeIcons[o.tipo] || 'fa-file'}"></i>
