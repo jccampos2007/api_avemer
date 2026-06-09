@@ -2,7 +2,7 @@
   "name": "AVEMER Alumnos",
   "short_name": "AVEMER",
   "description": "Portal de autogestión para alumnos AVEMER",
-  "start_url": "/api/pwa/index.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#f9fafb",
   "theme_color": "#7cb342",
