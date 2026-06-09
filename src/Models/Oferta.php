@@ -33,13 +33,14 @@ class Oferta
             SELECT 'diplomado' AS tipo, d.id, da.id AS abierto_id,
                    CONCAT(da.numero, ' - ', d.nombre) AS titulo,
                    d.nombre,
-                   d.costo AS duracion,
-                   'meses' AS duracion_unidad,
+                   duracion.nombre AS duracion,
+                   NULL AS duracion_unidad,
                    da.fecha_inicio,
                    da.fecha_fin,
                    sede.nombre AS sede
             FROM diplomado d
             INNER JOIN diplomado_abierto da ON da.diplomado_id = d.id
+            LEFT JOIN duracion ON duracion.id = d.duracion_id
             LEFT JOIN sede ON sede.id = da.sede_id
             WHERE da.estatus_id = 1
               AND da.deleted_at IS NULL
