@@ -33,11 +33,6 @@ class JwtAuthMiddleware implements MiddlewareInterface
         try {
             $secret = $_ENV['JWT_SECRET'] ?? '';
             $decoded = JWT::decode($token, new Key($secret, 'HS256'));
-
-            $request = $request->withAttribute('alumno_id', $decoded->sub);
-            $request = $request->withAttribute('auth_id', $decoded->jti ?? null);
-
-            return $handler->handle($request);
         } catch (\Exception $e) {
             $response = new SlimResponse();
             $response->getBody()->write(json_encode([
@@ -49,5 +44,10 @@ class JwtAuthMiddleware implements MiddlewareInterface
                 ->withHeader('Content-Type', 'application/json; charset=utf-8')
                 ->withStatus(401);
         }
+
+        $request = $request->withAttribute('alumno_id', $decoded->sub);
+        $request = $request->withAttribute('auth_id', $decoded->jti ?? null);
+
+        return $handler->handle($request);
     }
 }
