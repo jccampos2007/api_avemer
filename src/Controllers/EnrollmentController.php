@@ -112,7 +112,7 @@ class EnrollmentController
 </html>';
 
             $subject = "Nueva preinscripción de {$alumnoName} en {$tipoLabel}";
-            $this->sendEmail($subject, $emailBody, 'ingdiazjc@gmail.com');
+            $this->sendEmail($subject, $emailBody, 'info@grupoavemer.net');
         } catch (\Exception $e) {
             error_log('Error al enviar email de preinscripcion: ' . $e->getMessage());
         }
