@@ -1,9 +1,33 @@
-.nav-link.active { color: #1e3a5f; }
-.nav-link.active i { color: #1e3a5f; }
+/* Variables CSS para facilitar la personalización de la identidad visual de Avemer */
+:root {
+  --color-primary: #7cb342;       /* Verde vibrante de la esfera del logotipo */
+  --color-primary-dark: #5a8f22;  /* Verde más oscuro para estados hover/enfoque */
+  --color-primary-light: #eef6e6; /* Fondo verde muy claro para elementos activos */
+  --color-text-active: #406020;   /* Texto activo en contraste con el fondo claro */
+  --color-gray-border: #dcdfdc;   /* Gris neutro suave para bordes elegantes */
+}
 
-#toast.show { opacity: 1; transform: translateY(0); }
-#toast { opacity: 0; transform: translateY(-10px); }
+/* Enlaces de navegación activos adaptados al nuevo verde corporativo */
+.nav-link.active { 
+  color: var(--color-primary-dark); 
+}
 
+.nav-link.active i { 
+  color: var(--color-primary); 
+}
+
+/* Componente de notificaciones (Toast) */
+#toast.show { 
+  opacity: 1; 
+  transform: translateY(0); 
+}
+
+#toast { 
+  opacity: 0; 
+  transform: translateY(-10px); 
+}
+
+/* Deslizador de tarjetas de ofertas */
 .offer-card-slider {
   width: 0;
   overflow: hidden;
@@ -15,18 +39,35 @@
   width: 6rem;
 }
 
+/* Indicadores de colapso */
 .offer-group-chevron {
   transition: transform 0.2s ease;
 }
 
-.tab-btn { color: #6b7280; }
-.tab-btn:hover { color: #374151; }
+/* Botones de pestañas estilizados con la nueva paleta de colores de Avemer */
+.tab-btn { 
+  color: #6b7280; 
+}
+
+.tab-btn:hover { 
+  color: #1f2937; 
+}
+
 .tab-btn.tab-active {
-  background-color: #1e3a5f;
-  color: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  background-color: var(--color-primary);
+  color: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(124, 179, 66, 0.2), 0 2px 4px -1px rgba(124, 179, 66, 0.1);
+}
+
+/* Estilo adicional para resaltar interacciones o menús en pantallas de autogestión */
+.active-item-highlight {
+  background-color: var(--color-primary-light);
+  color: var(--color-text-active);
+  border-left: 4px solid var(--color-primary);
 }
 
 @media (max-width: 640px) {
-  #mainContent { padding-bottom: 5rem; }
+  #mainContent { 
+    padding-bottom: 5rem; 
+  }
 }

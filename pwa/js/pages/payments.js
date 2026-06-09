@@ -146,10 +146,10 @@ async function renderPayments(container) {
           <div id="voucher_group">
             <label for="payVoucher" class="block text-xs text-gray-500 mb-1">Voucher (JPG, PNG o WebP, máx 2MB)</label>
             <input type="file" id="payVoucher" accept="image/*"
-              class="w-full border border-gray-300 rounded-lg text-sm text-gray-600 file:mr-2 file:py-2 file:px-4 file:border-0 file:rounded-lg file:bg-primary-500 file:text-white file:text-sm file:font-semibold">
+              class="w-full border border-gray-300 rounded-lg text-sm text-gray-600 file:mr-2 file:py-2 file:px-4 file:border-0 file:rounded-lg file:bg-gray-700 file:text-white file:text-sm file:font-semibold">
             <p id="voucherFileName" class="text-xs text-gray-400 mt-1 hidden"></p>
           </div>
-          <button type="submit" class="w-full bg-green-600 text-white font-semibold py-2 rounded-lg hover:bg-green-700 transition text-sm" ${cuotas.length === 0 ? 'disabled' : ''}>
+          <button type="submit" class="w-full bg-gray-700 text-white font-semibold py-2 rounded-lg hover:bg-gray-900 transition text-sm" ${cuotas.length === 0 ? 'disabled' : ''}>
             <i class="fa fa-paper-plane mr-2"></i>Reportar pago
           </button>
         </form>
